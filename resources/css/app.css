@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dt-empty {
+    display: block;
+    padding:  1.5rem 0;
+    text-align: center;
+}
