@@ -16,7 +16,10 @@ class isCashier
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check() || auth()->user()->role !== 'cashier') {
-            return redirect()->route('home')->with('error', 'You do not have permission to access this page');
+            return redirect()->route('home')->with('error', [
+                'title' => 'Unauthorized',
+                'message' => 'You are not allowed to access this page'
+            ]);
         }
 
 

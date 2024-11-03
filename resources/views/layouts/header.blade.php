@@ -1,5 +1,7 @@
-@include('auth.login')
-@include('auth.register')
+@if (!auth()->check())
+    @include('auth.login')
+    @include('auth.register')
+@endif
 
 <header
     class="flex fixed top-0 w-full z-20  bg-white items-center justify-between gap-4 lg:gap-10 md:px-10 py-3.5 px-5 border-b border-b-gray-100 md:gap-5">
@@ -23,7 +25,7 @@
 
     {{-- Right --}}
     <div class="flex items-center justify-between gap-5">
-        <a href="" class="sm:px-2 md:px-6">
+        <a href="{{ route('cart.index') }}" class="sm:px-2 md:px-6">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-600 size-5" viewBox="0 0 16 16">
                 <path fill="currentColor"
                     d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607L1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4a2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2a1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2" />
@@ -33,7 +35,7 @@
         @if (Auth::check())
             <div class="flex cursor-pointer items-center relative  gap-1.5 text-base" id="dropdownHoverButton"
                 data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover">
-                {{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}
+                {{ Auth::user()->name ?? Auth::user()->email }}
                 <svg class="text-gray-600 size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-width="2"
@@ -44,11 +46,11 @@
                     class="absolute z-10 hidden bg-white divide-y divide-gray-100 rounded shadow !right-10 top-5 w-44  ">
                     <ul class="py-2 text-sm text-gray-700 " aria-labelledby="dropdownHoverButton">
                         <li>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 ">Keranjang</a>
+                            <a href="{{ route('cart.index') }}" class="block px-4 py-2 hover:bg-gray-100 ">Keranjang</a>
                         </li>
-                        @if (auth()->check())
+                        @if (Auth::user()->role == 'cashier')
                             <li>
-                                <a href=""
+                                <a href="{{ route('cashier.order.index') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 ">Order</a>
                             </li>
                         @endif
@@ -66,13 +68,12 @@
                             </li>
                         @endif
                         <li>
-                            <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-100 ">Sign
-                                out</a>
+                            <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-100 ">
+                                Sign out
+                            </a>
                         </li>
                     </ul>
                 </div>
-
-
             </div>
         @else
             <div class="flex gap-2">

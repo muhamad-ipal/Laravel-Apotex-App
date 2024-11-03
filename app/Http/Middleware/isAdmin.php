@@ -15,8 +15,11 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return redirect()->route('home')->with('error', 'You do not have permission to access this page');
+        if (!auth()->check() || auth()->user()->role != 'admin') {
+            return redirect()->route('home')->with('error', [
+                'title' => 'Unauthorized',
+                'message' => 'You are not authorized to access this page'
+            ]);
         }
 
         return $next($request);

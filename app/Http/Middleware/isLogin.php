@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,11 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check()) {
-            return redirect()->route('home')->with('error', 'anda harus login terlebih dahulu');
+        if (!Auth::check()) {
+            return redirect()->route('home')->with('error', [
+                'title' => 'Unauthorized',
+                'message' => 'You must login first'
+            ]);
         }
 
         return $next($request);

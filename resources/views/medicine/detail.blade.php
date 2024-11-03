@@ -58,8 +58,10 @@
                 </div>
             </div>
             <div class="hidden col-span-3 pr-5 lg:block">
-                <form class="px-2.5 py-5 border border-gray-300 rounded-md" action="" method="POST">
+                <form class="px-2.5 py-5 border border-gray-300 rounded-md" action="{{ route('cart.store') }}"
+                    method="POST">
                     @csrf
+                    <input type="hidden" name="medicine_id" value="{{ $medicine->id }}">
                     <h5 class="text-base font-bold text-gray-800">Atur Jumlah pemesanan</h5>
                     <div class="flex gap-4 mt-5">
                         <input type="number" required name="qty" id="qty" value="1"
@@ -84,7 +86,6 @@
                     </div>
                 </form>
             </div>
-            {{--  --}}
             {{--  --}}
             <div class="hidden col-span-9 pl-5 lg:block">
                 <h3 class="hidden mb-3 text-lg font-bold text-gray-800 uppercase lg:block">ulasan pembeli</h3>
