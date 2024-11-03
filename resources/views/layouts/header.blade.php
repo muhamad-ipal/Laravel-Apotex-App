@@ -60,7 +60,7 @@
                             </li>
 
                             <li>
-                                <a href=""
+                                <a href="{{ route('admin.user.index') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 ">Kelola
                                     User</a>
                             </li>

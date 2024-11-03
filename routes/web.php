@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MedicineController;
 
@@ -33,12 +34,18 @@ Route::middleware('isLogin')->group(function () {
 
 // -----------------isAdmin -----------------
 Route::middleware('isAdmin')->name('admin.')->group(function () {
+  // prefix medicine
   Route::prefix('manage-medicine')->group(function () {
     Route::resource('medicine', MedicineController::class)
       ->only(['store', 'update', 'destroy']);
     Route::get('/', [MedicineController::class, 'manageMedicines'])->name('medicine.index');
     Route::post('medicine/update-stock/{id}', [MedicineController::class, 'updateStock'])
       ->name('medicine.update-stock');
+  });
+
+  // prefix user
+  Route::prefix('manage-user')->group(function () {
+    Route::resource('user', UserController::class)->except(['edit', 'show', 'create']);
   });
 });
 
