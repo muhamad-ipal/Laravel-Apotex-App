@@ -56,4 +56,5 @@ Route::middleware('isAdmin')->name('admin.')->group(function () {
 Route::middleware('isCashier')->name('cashier.')->group(function () {
   Route::resource('order', OrderController::class)->only(['index', 'update', 'create', 'store', 'destroy']);
   Route::get('/order/struk/{id}', [OrderController::class, 'struk'])->name('order.struk');
+  Route::get('/order/struk/download/{id}', [OrderController::class, 'downloadStruk'])->name('order.download-struk');
 });

@@ -11,7 +11,9 @@
                 </svg>
                 Kembali
             </button>
-            <button class="flex items-center gap-2 px-3 py-2 font-medium text-white bg-gray-500 rounded-md">
+            @dump($order->id)
+            <button class="flex items-center gap-2 px-3 py-2 font-medium text-white bg-gray-500 rounded-md"
+                onclick="window.location.href='{{ route('cashier.order.download-struk', $order->id) }}'">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                     <g fill="none">
                         <path

@@ -19,9 +19,8 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
                         </svg>
                     </div>
-                    <input type="text" id="dt-search"
-                        class="block pt-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 w-80 bg-gray-50 focus:ring-green-500 focus:border-green-500"
-                        placeholder="Cari Nama, Tipe, Harga...">
+                    <input type="date" id="dt-date-search"
+                        class="block pt-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 w-80 bg-gray-50 focus:ring-green-500 focus:border-green-500">
                 </div>
 
                 <div class="flex items-center space-x-2 text-sm dt-length lg:text-base">
@@ -44,7 +43,7 @@
                             <th scope="col" class="px-6 py-3 ">
                                 Cashier
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3 ">
                                 <div class="flex items-center">
                                     Customer
                                     <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +53,7 @@
                                     </svg>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-[12%]">
+                            <th scope="col" class="px-0 py-3 w-[12%]">
                                 <div class="flex items-center">
                                     Item
                                     <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +83,7 @@
                                     </svg>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 w-28">
+                            <th scope="col" class="px-6 py-3">
                                 <span class="sr-only">Edit</span>
                             </th>
                         </tr>
@@ -99,7 +98,7 @@
                                 <td class="px-6 py-2.5">
                                     {{ $order->customer_name }}
                                 </td>
-                                <td class="px-6 py-2.5">
+                                <td class="px-0 py-2.5">
                                     @php
                                         $totalItem = 0;
                                         foreach (json_decode($order->medicines) as $orderItem) {
@@ -114,10 +113,12 @@
                                 <td class="px-6 py-2.5">
                                     {{ $order->created_at }}
                                 </td>
-                                <td class="flex items-center gap-2 px-6 py-2.5">
-                                      <span class="font-medium text-red-600 cursor-pointer hover:underline"
+                                <td class="flex items-center gap-2 px-6 pl-0 py-2.5">
+                                    <span class="font-medium text-red-600 cursor-pointer hover:underline"
                                         data-modal-target="modal-order-delete" data-modal-toggle="modal-order-delete"
                                         onclick="setActionToDelete('{{ route('cashier.order.destroy', $order->id) }}')">Remove</span>
+                                    <a class="font-medium text-gray-600 cursor-pointer whitespace-nowrap hover:underline"
+                                        href="{{ route('cashier.order.download-struk', $order->id) }}">Cetak Struk</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -137,7 +138,7 @@
                     </li>
                     <li>
                         <span id="next-page"
-                            class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 ">Next</span>
+                            class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 whire rounded-e-lg hover:bg-gray-100 hover:text-gray-700 ">Next</span>
                     </li>
                 </ul>
             </nav>

@@ -2,7 +2,10 @@
     @include('layouts.header')
 
     <div class="max-w-screen-lg px-5 py-24 mx-auto text-gray-700">
-        <h1 class="mb-5 text-2xl font-semibold text-gray-900">Buat Pesanan Baru</h1>
+        <button>
+            <a href="{{ route('cashier.order.index') }}" class="text-blue-500">&larr; Kembali</a>
+        </button>
+        <h1 class="mt-5 mb-5 text-2xl font-semibold text-gray-900">Buat Pesanan Baru</h1>
         <form class="p-10 border border-gray-200 rounded-lg bg-gray-50" method="POST"
             action="{{ route('cashier.order.store') }}">
             @csrf

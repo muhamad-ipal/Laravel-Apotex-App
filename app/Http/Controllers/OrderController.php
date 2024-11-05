@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -65,15 +66,22 @@ class OrderController extends Controller
             'total_price' => $totalPrice * 1.1,
         ]);
 
-        return $proses
-            ? redirect()->route('cashier.order.struk', $proses->id)->with('success', [
+        if ($proses) {
+            $order = Medicine::findOrFail($proses->id);
+            $order->update([
+                $order->stock - $qty
+            ]);
+
+            return redirect()->route('cashier.order.struk', $proses->id)->with('success', [
                 'title' => 'Order created',
                 'message' => 'Order has been created successfully'
-            ])
-            : redirect()->back()->with('error', [
+            ]);
+        } else {
+            return redirect()->back()->with('error', [
                 'title' => 'Order failed',
                 'message' => 'Order failed to create'
             ]);
+        }
     }
 
     /**
@@ -98,5 +106,16 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         return view('order.struk', compact('order'));
+    }
+
+    public function downloadStruk($id)
+    {
+        $order = Order::findOrFail($id)->toArray();
+
+        view()->share('order', $order);
+
+        $pdf = Pdf::loadView('order.download-struk', $order);
+
+        return $pdf->setPaper('a4', 'landscape')->download('hasil.pdf');
     }
 }

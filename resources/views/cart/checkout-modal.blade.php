@@ -1,8 +1,8 @@
 {{-- <div id="checkout-modal" tabindex="-1"
     class="overflow-y-auto overflow-x-hidden hidden  fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"> --}}
 <div id="checkout-modal" tabindex="-1"
-    class="overflow-y-auto overflow-x-hidden hidden  fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="w-full max-w-screen-sm p-5 bg-white border border-gray-300 rounded-lg">
+    class="overflow-y-auto overflow-x-hidden hidden  fixed top-0 right-0 left-0 z-50 justify-center !items-start  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="w-full max-w-screen-sm p-5 mt-5 bg-white border border-gray-300 rounded-lg">
         <h1 class="pb-3 text-xl font-semibold text-gray-900 border-b border-gray-300 mb-7">Checkout</h1>
         <div class="flex gap-2.5">
             <img src="{{ asset('assets/img/map.svg') }}" class="size-12" alt="">
@@ -77,34 +77,32 @@
         </div>
         <div class="mt-10 space-y-2.5 font-semibold text-gray-800">
             <p class="text-sm mb-2.5">Pilih Metode Pembayaran</p>
-            <div class="mt-10 space-y-2.5 font-semibold text-gray-800">
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const paymentMethodBank = document.getElementById('payment-method-bank');
-                        const bankAccount = document.getElementById('bank-account');
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const paymentMethodBank = document.getElementById('payment-method-bank');
+                    const bankAccount = document.getElementById('bank-account');
 
-                        bankAccount.style.display = paymentMethodBank.checked ? 'block' : 'none';
+                    bankAccount.style.display = paymentMethodBank.checked ? 'block' : 'none';
 
-                        paymentMethodBank.addEventListener('change', function() {
-                            bankAccount.style.display = this.checked ? 'block' : 'none';
-                        });
+                    paymentMethodBank.addEventListener('change', function() {
+                        bankAccount.style.display = this.checked ? 'block' : 'none';
                     });
-                </script>
-                <label class="flex flex-col px-3 py-4 border border-gray-300 rounded" for="payment-method-bank">
-                    <div class="flex items-center justify-between w-full">
-                        <div class="flex gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 2048 2048">
-                                <path fill="#057a55"
-                                    d="M1792 768v768q0 1 9 27t22 67t30 89t30 90t24 73t13 38H0q2-7 12-37t25-73t30-91t29-88t23-67t9-28V768H0V640l960-480l960 480v128zM286 640h1348L960 303zm1250 128v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 768h128V768H256zm1486 256l-42-128H220l-42 128z" />
-                            </svg>
-                            <span>Transfer Bank</span>
-                        </div>
-                        <input type="radio" name="payment-method" id="payment-method-bank">
+                });
+            </script>
+            <label class="flex flex-col px-3 py-4 border border-gray-300 rounded" for="payment-method-bank">
+                <div class="flex items-center justify-between w-full">
+                    <div class="flex gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 2048 2048">
+                            <path fill="#057a55"
+                                d="M1792 768v768q0 1 9 27t22 67t30 89t30 90t24 73t13 38H0q2-7 12-37t25-73t30-91t29-88t23-67t9-28V768H0V640l960-480l960 480v128zM286 640h1348L960 303zm1250 128v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 0v768h128V768zm-256 768h128V768H256zm1486 256l-42-128H220l-42 128z" />
+                        </svg>
+                        <span>Transfer Bank</span>
                     </div>
-                    <input type="number" required name="bank-account" id="bank-account" placeholder="No Rekening"
-                        class="p-1.5 mt-2.5 rounded border text-sm font-normal text-gray-400 border-gray-300 focus:ring-green-500 focus:border-green-500">
-                </label>
-            </div>
+                    <input type="radio" name="payment-method" id="payment-method-bank">
+                </div>
+                <input type="number" required name="bank-account" id="bank-account" placeholder="No Rekening"
+                    class="p-1.5 mt-2.5 rounded border text-sm font-normal text-gray-400 border-gray-300 focus:ring-green-500 focus:border-green-500">
+            </label>
             <label class="flex items-center justify-between gap-2 px-3 py-4 border border-gray-300 rounded"
                 for="payment-method-cod">
                 <div class="flex gap-2">

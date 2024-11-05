@@ -35,7 +35,9 @@
         @if (Auth::check())
             <div class="flex cursor-pointer items-center relative  gap-1.5 text-base" id="dropdownHoverButton"
                 data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover">
-                {{ Auth::user()->name ?? Auth::user()->email }}
+                <span class="w-full whitespace-nowrap">
+                    {{ Auth::user()->name ?? Auth::user()->email }}
+                </span>
                 <svg class="text-gray-600 size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-width="2"

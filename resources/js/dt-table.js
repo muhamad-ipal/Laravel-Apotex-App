@@ -3,7 +3,7 @@ import $ from "jquery";
 import dt from "datatables.net-dt";
 
 $(document).ready(function () {
-    var table = $("#dt-table").DataTable({
+    const table = $("#dt-table").DataTable({
         paging: true,
         searching: true,
         ordering: true,
@@ -14,10 +14,10 @@ $(document).ready(function () {
         dom: "t",
     });
 
-    function updatePagination() {
+    const updatePagination = () => {
         var pageInfo = table.page.info();
         $("#page-number").text(`${pageInfo.page + 1} dari ${pageInfo.pages}`);
-    }
+    };
 
     $("#prev-page").on("click", function () {
         if (table.page() > 0) {
@@ -46,4 +46,11 @@ $(document).ready(function () {
         var selectedValue = $(this).val();
         table.page.len(selectedValue).draw();
     });
+
+    // date search
+
+$("#dt-date-search").on("change", function () {
+    let date = $(this).val();
+    table.search(date).draw();
+});
 });
