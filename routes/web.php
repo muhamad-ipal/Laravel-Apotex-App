@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MedicineController;
 
+
+
+
 // -----------------Global -----------------
 Route::get('/', [HomePageController::class, 'index'])->name('home');
 Route::name('medicine.')->prefix('medicine')->group(function () {
@@ -30,6 +33,8 @@ Route::middleware('isLogin')->group(function () {
   // cart
   Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy']);
   Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+  // checkout
+  Route::post('/medicine/{id}/checkout', [MedicineController::class, 'checkOut'])->name('medicine.checkout');
   // logout
   Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -40,18 +45,14 @@ Route::middleware('isLogin')->group(function () {
 Route::middleware('isAdmin')->name('admin.')->group(function () {
   //  user
   Route::resource('user', UserController::class)->except(['edit', 'show', 'create']);
-
-  // prefix medicine
-  Route::prefix('manage-medicine')->group(function () {
-    Route::resource('medicine', MedicineController::class)
-      ->only(['store', 'update', 'destroy']);
-    Route::get('/', [MedicineController::class, 'manageMedicines'])->name('medicine.index');
-    Route::post('medicine/update-stock/{id}', [MedicineController::class, 'updateStock'])
-      ->name('medicine.update-stock');
-  });
-  
   // export excel
   Route::get('order/export-excel', [OrderController::class, 'exportExcel'])->name('order.export-excel');
+  // prefix medicine
+  Route::prefix('manage-medicine')->group(function () {
+    Route::resource('medicine', MedicineController::class)->only(['store', 'update', 'destroy']);
+    Route::get('/', [MedicineController::class, 'manageMedicines'])->name('medicine.index');
+    Route::post('medicine/update-stock/{id}', [MedicineController::class, 'updateStock'])->name('medicine.update-stock');
+  });
 });
 
 

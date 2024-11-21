@@ -38,7 +38,7 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping
 
         return [
             $order->id,
-            $order->nama_customer,
+            $order->customer_name,
             $order->user->name,
             $medicines,
             "Rp" . number_format($order->total_price, 0, ',', '.'),

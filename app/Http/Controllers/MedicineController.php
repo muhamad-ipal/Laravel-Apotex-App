@@ -73,7 +73,14 @@ class MedicineController extends Controller
     public function show($slug)
     {
         $medicine = Medicine::where('slug', $slug)->firstOrFail();
-        return view('medicine.detail', compact('medicine'));
+
+        $tax = $medicine->price * 0.02;
+        $pickup = 12000;
+        $promo = 9000;
+        $total = $medicine->price + $tax + $pickup - $promo;
+
+
+        return view('medicine.detail', compact('medicine', 'tax', 'pickup', 'promo', 'total'));
     }
 
 
@@ -147,4 +154,30 @@ class MedicineController extends Controller
                 'message' => 'Data gagal dihapus'
             ]);
     }
+
+
+    /**
+     * checkout the medicine
+     */
+
+    public function checkOut($id)
+    {
+        $medicine = Medicine::findOrFail($id);
+
+        if ($medicine->stock < 1) {
+            return redirect()->back()->with('error', [
+                'title' => 'Error',
+                'message' => 'Stock habis'
+            ]);
+        }
+
+        $medicine->stock -= 1;
+        $medicine->save();  
+
+        return redirect()->route('medicine.show', $medicine->slug)->with('success', [
+            'title' => 'Success',
+            'message' => 'Berhasil checkout'
+        ]);
+    }
+
 }

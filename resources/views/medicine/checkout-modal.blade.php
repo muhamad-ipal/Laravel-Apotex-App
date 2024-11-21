@@ -13,19 +13,18 @@
             </div>
         </div>
         <div class="mt-10 space-y-6">
-            @foreach ($carts as $cart)
                 <div class="flex gap-4">
                     <img src="{{ asset('assets/img/category/kapsul.jpg') }}" alt="" class="rounded-md size-24">
                     <div>
                         <div class="text-base font-medium text-gray-800">
-                            {{ $cart->medicine->name }}
+                            {{ $medicine->name }}
                         </div>
                         <div class="flex items-center gap-4 mt-2">
                             <p class="text-sm font-semibold text-gray-900">
-                                Rp{{ number_format($cart->medicine->price, '0', '.', '.') }}</p>
-                            <div class="flex items-center">
+                                Rp{{ number_format($medicine->price, '0', '.', '.') }}</p>
+                            {{-- <div class="flex items-center">
                                 <button type="button" id="decrement-button"
-                                    data-input-counter-decrement="counter-input-{{ $cart->id }}"
+                                    data-input-counter-decrement="counter-input-{{ $medicine->id }}"
                                     class="inline-flex items-center justify-center w-5 h-5 bg-gray-100 border border-gray-300 rounded-md shrink-0 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
                                     <svg class="h-2.5 w-2.5 text-gray-900 " aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
@@ -33,11 +32,11 @@
                                             stroke-width="2" d="M1 1h16"></path>
                                     </svg>
                                 </button>
-                                <input type="text" id="counter-input-{{ $cart->id }}" data-input-counter=""
+                                <input type="text" id="counter-input-{{ $medicine->id }}" data-input-counter=""
                                     class="w-10 text-sm font-medium text-center text-gray-900 bg-transparent border-0 shrink-0 focus:outline-none focus:ring-0 "
-                                    placeholder="" value="{{ $cart->quantity }}" required="">
+                                    placeholder="" value="{{ $medicine->quantity }}" required="">
                                 <button type="button" id="increment-button"
-                                    data-input-counter-increment="counter-input-{{ $cart->id }}"
+                                    data-input-counter-increment="counter-input-{{ $medicine->id }}"
                                     class="inline-flex items-center justify-center w-5 h-5 bg-gray-100 border border-gray-300 rounded-md shrink-0 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
                                     <svg class="h-2.5 w-2.5 text-gray-900 " aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
@@ -45,11 +44,10 @@
                                             stroke-width="2" d="M9 1v16M1 9h16"></path>
                                     </svg>
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
-            @endforeach
         </div>
         <div class="p-3 mt-10 border border-gray-300 rounded">
             <div class="py-1.5 px-2 text-xs text-green-600 bg-green-100 rounded ">
@@ -122,7 +120,7 @@
                         <dl class="flex items-center justify-between gap-4">
                             <dt class="text-base font-normal text-gray-500 ">Subtotal</dt>
                             <dd class="text-base font-medium text-gray-900 ">
-                                Rp{{ number_format($subtotal, 0, ',', '.') }}</dd>
+                                Rp{{ number_format($medicine->price, 0, ',', '.') }}</dd>
                         </dl>
 
                         <dl class="flex items-center justify-between gap-4">
@@ -152,7 +150,7 @@
                     </dl>
                 </div>
 
-                <form action="{{ route('cart.checkout') }}" method="post">
+                <form action="{{ route('medicine.checkout', $medicine->id) }}" method="post">
                     @csrf
                     <button type="submit"
                         class="flex w-full items-center justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 ">

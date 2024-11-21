@@ -53,7 +53,7 @@ class CartController extends Controller
 
         return $proses
             ? redirect()->back()->with('success', [
-                'title' => 'Success',
+                'title' => 'Success added',
                 'message' => ' Berhasil ditambahkan ke keranjang'
             ])
             : redirect()->back()->with('error', [

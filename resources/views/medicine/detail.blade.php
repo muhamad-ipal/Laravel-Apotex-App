@@ -1,6 +1,9 @@
 @extends('layouts.index')
 
 @section('content')
+    @include('medicine.checkout-modal')
+
+
     <div class="relative md:pt-28 pt-[66px] pb-16 xl:pb-0 lg:pb-20 max-w-[1180px]  mx-auto">
         <div class="grid-cols-12 grid-rows-1 gap-10 auto-rows-auto md:grid">
             <div class="md:pl-5 mb-7 md:mb-0 md:col-span-4 lg:col-span-3">
@@ -79,7 +82,7 @@
                             class="hidden w-full py-2 text-sm font-semibold text-white bg-green-600 rounded-md md:text-base md:block">
                             + Keranjang
                         </button>
-                        <button type="button"
+                        <button type="button" data-modal-target="checkout-modal" data-modal-toggle="checkout-modal"
                             class="w-full py-2 mt-2 text-sm font-semibold text-green-600 bg-white border border-green-600 rounded-md">
                             Beli
                         </button>
