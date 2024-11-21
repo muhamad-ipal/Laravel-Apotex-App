@@ -3,12 +3,28 @@
 
     @include('layouts.header')
 
-    <div class="relative max-w-screen-lg px-5 pt-24 pb-10 mx-auto">
-        <button class="inline-block py-2 px-3.5  font-medium text-white bg-green-600 mb-5 rounded-md">
-            <a href="{{ route('cashier.order.create') }}">
-                Buat Order
-            </a>
-        </button>
+    <div class="relative max-w-screen-xl px-5 pt-24 pb-10 mx-auto">
+        <div class="flex gap-2 item-center">
+            <button class="inline-block py-2 px-3.5  font-medium text-white bg-green-600 mb-5 rounded-md">
+                <a href="{{ route('cashier.order.create') }}">
+                    Kembali
+                </a>
+            </button>
+            @if (auth()->user()->role == 'admin')
+                <button class="inline-block py-2 px-3.5  font-medium text-white bg-green-600 mb-5 rounded-md">
+                    <a href="{{ route('admin.order.export-excel') }}">
+                        Export Excel
+                    </a>
+                </button>
+            @else
+                <button class="inline-block py-2 px-3.5  font-medium text-white bg-green-600 mb-5 rounded-md">
+                    <a href="{{ route('cashier.order.create') }}">
+                        Buat Order
+                    </a>
+                </button>
+            @endif
+
+        </div>
         <div>
             <div class="flex items-center justify-between mb-5">
                 <div class="relative ">
@@ -53,7 +69,7 @@
                                     </svg>
                                 </div>
                             </th>
-                            <th scope="col" class="px-0 py-3 w-[12%]">
+                            <th scope="col" class="w-1/4 px-3 py-3">
                                 <div class="flex items-center">
                                     Item
                                     <svg class="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -83,9 +99,11 @@
                                     </svg>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">Edit</span>
-                            </th>
+                            @if (auth()->user()->role == 'cashier')
+                                <th scope="col" class="px-6 py-3">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -93,33 +111,41 @@
                             <tr class="bg-white border-b even:bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
                                     class="w-1/2 px-5 py-2.5 font-medium text-gray-900 truncate dark:text-white">
+                                    {{-- @dd($order) --}}
                                     {{ $order->user->name }}
                                 </th>
                                 <td class="px-6 py-2.5">
                                     {{ $order->customer_name }}
                                 </td>
-                                <td class="px-0 py-2.5">
-                                    @php
-                                        $totalItem = 0;
-                                        foreach (json_decode($order->medicines) as $orderItem) {
-                                            $totalItem += $orderItem->qty;
-                                        }
-                                        echo $totalItem;
-                                    @endphp
+                                <td class="px-6 py-2.5">
+                                    <ul class="list-decimal">
+                                        @foreach (json_decode($order['medicines']) as $key => $value)
+                                            <li>{{ explode('-', $value->medicine_name)[0] }} <span
+                                                    class="ml-1 text-xs font-semibold text-gray-900">&times;{{ $value->qty }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </td>
                                 <td class="px-6 py-2.5">
                                     Rp{{ number_format($order->total_price, 0, ',', '.') }}
                                 </td>
                                 <td class="px-6 py-2.5">
-                                    {{ $order->created_at }}
+                                    {{ \Carbon\Carbon::parse($order->created_at)->locale('id')->translatedFormat('Y-M-l') }}
+                                    {{-- <p class="hidden sr-only">{{ $order->created_at }}</p> --}}
                                 </td>
-                                <td class="flex items-center gap-2 px-6 pl-0 py-2.5">
-                                    <span class="font-medium text-red-600 cursor-pointer hover:underline"
-                                        data-modal-target="modal-order-delete" data-modal-toggle="modal-order-delete"
-                                        onclick="setActionToDelete('{{ route('cashier.order.destroy', $order->id) }}')">Remove</span>
-                                    <a class="font-medium text-gray-600 cursor-pointer whitespace-nowrap hover:underline"
-                                        href="{{ route('cashier.order.download-struk', $order->id) }}">Cetak Struk</a>
-                                </td>
+                                @if (auth()->user()->role == 'cashier')
+                                    <td class=" px-6 pl-0 py-2.5">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <span class="font-medium text-red-600 cursor-pointer hover:underline"
+                                                data-modal-target="modal-order-delete"
+                                                data-modal-toggle="modal-order-delete"
+                                                onclick="setActionToDelete('{{ route('cashier.order.destroy', $order->id) }}')">Remove</span>
+                                            <a class="font-medium text-gray-600 cursor-pointer whitespace-nowrap hover:underline"
+                                                href="{{ route('cashier.order.download-struk', $order->id) }}">Cetak
+                                                Struk</a>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

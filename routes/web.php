@@ -49,12 +49,22 @@ Route::middleware('isAdmin')->name('admin.')->group(function () {
     Route::post('medicine/update-stock/{id}', [MedicineController::class, 'updateStock'])
       ->name('medicine.update-stock');
   });
+  
+  // export excel
+  Route::get('order/export-excel', [OrderController::class, 'exportExcel'])->name('order.export-excel');
 });
 
 
 // ----------------- isCashier -----------------
 Route::middleware('isCashier')->name('cashier.')->group(function () {
-  Route::resource('order', OrderController::class)->only(['index', 'update', 'create', 'store', 'destroy']);
+  Route::resource('order', OrderController::class)->only(['update', 'create', 'store', 'destroy']);
   Route::get('/order/struk/{id}', [OrderController::class, 'struk'])->name('order.struk');
   Route::get('/order/struk/download/{id}', [OrderController::class, 'downloadStruk'])->name('order.download-struk');
 });
+
+
+// ----------------- isCashier or isAdmin -----------------
+Route::middleware(['isAdminOrCashier'])->group(function () {
+  Route::resource('order', OrderController::class)->only(['index']);
+});
+

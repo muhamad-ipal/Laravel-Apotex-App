@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
+use App\Exports\OrdersExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with('user')->get();
 
         return view('order.index', compact('orders'));
     }
@@ -45,8 +47,25 @@ class OrderController extends Controller
 
         foreach ($request->medicine_id as $index => $id) {
             $medicine = Medicine::findOrFail($id);
+            $requestedQty = $request->qty[$index];
+
+            if ($requestedQty > $medicine->stock) {
+                return redirect()->back()
+                    ->with('error', [
+                        'title' => 'Stok tidak mencukupi',
+                        'message' => "Stok {$medicine->name} tidak mencukupi. Tersedia: {$medicine->stock}"
+                    ])->withInput();
+            }
+        }
+
+        foreach ($request->medicine_id as $index => $id) {
+            $medicine = Medicine::findOrFail($id);
             $qty = $request->qty[$index];
             $subPrice = $medicine->price * $qty;
+
+            $medicine->update([
+                'stock' => $medicine->stock - $qty
+            ]);
 
             $arrayAssocMedicines[] = [
                 'medicine_name' => $medicine->name,
@@ -67,11 +86,6 @@ class OrderController extends Controller
         ]);
 
         if ($proses) {
-            $order = Medicine::findOrFail($proses->id);
-            $order->update([
-                $order->stock - $qty
-            ]);
-
             return redirect()->route('cashier.order.struk', $proses->id)->with('success', [
                 'title' => 'Order created',
                 'message' => 'Order has been created successfully'
@@ -117,5 +131,10 @@ class OrderController extends Controller
         $pdf = Pdf::loadView('order.download-struk', $order);
 
         return $pdf->setPaper('a4', 'landscape')->download('hasil.pdf');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new OrdersExport, 'rekap-pembelian ' . date('d-m-Y') . '.xlsx');
     }
 }

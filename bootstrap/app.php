@@ -15,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'isLogin' => \App\Http\Middleware\isLogin::class,
             'isAdmin' => \App\Http\Middleware\isAdmin::class,
             'isCashier' => \App\Http\Middleware\isCashier::class,
-            'isGuest' => \App\Http\Middleware\isGuest::class
+            'isGuest' => \App\Http\Middleware\isGuest::class,
+            'isAdminOrCashier' => \App\Http\Middleware\isAdminOrCashier::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

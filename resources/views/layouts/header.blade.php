@@ -52,7 +52,7 @@
                         </li>
                         @if (Auth::user()->role == 'cashier')
                             <li>
-                                <a href="{{ route('cashier.order.index') }}"
+                                <a href="{{ route('order.index') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 ">Order</a>
                             </li>
                         @endif
@@ -62,11 +62,14 @@
                                     class="block px-4 py-2 hover:bg-gray-100 ">Kelola
                                     Obat</a>
                             </li>
-
                             <li>
                                 <a href="{{ route('admin.user.index') }}"
                                     class="block px-4 py-2 hover:bg-gray-100 ">Kelola
                                     User</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('order.index') }}" class="block px-4 py-2 hover:bg-gray-100 ">Data
+                                    Pembelian</a>
                             </li>
                         @endif
                         <li>

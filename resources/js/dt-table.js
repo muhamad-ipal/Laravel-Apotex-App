@@ -49,8 +49,8 @@ $(document).ready(function () {
 
     // date search
 
-$("#dt-date-search").on("change", function () {
-    let date = $(this).val();
-    table.search(date).draw();
-});
+    $("#dt-date-search").on("change", function () {
+        let date = $(this).val();
+        table.search(date).draw();
+    });
 });

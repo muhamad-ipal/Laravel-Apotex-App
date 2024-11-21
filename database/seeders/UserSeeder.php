@@ -35,6 +35,15 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
             ],
             [
+                'name' => 'Cashier 2',
+                'email' => 'cashier2@tes',
+                'password' => Hash::make('cashier2'),
+                'role' => 'cashier',
+                'telephone' => '08123456789',
+                'address' => 'Jl. Raya Wangun, RT.01/RW.06, Sindangsari, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16146',
+                'created_at' => now(),
+            ],
+            [
                 'name' => 'user',
                 'email' => 'user@tes',
                 'password' => Hash::make('user'),

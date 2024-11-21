@@ -4,7 +4,7 @@
     <div class="relative flex items-center justify-center w-full mt-20 py-5 h-[calc(100vh-5rem)]">
         <div class="absolute flex items-center gap-2 top-5 right-5">
             <button class="flex items-center gap-2 px-3 py-2 font-medium text-white bg-green-500 rounded-md"
-                onclick="window.location.href='{{ route('cashier.order.index') }}'">
+                onclick="window.location.href='{{ route('order.index') }}'">
                 <svg xmlns="http://www.w3.org/2000/svg" class="size-6" viewBox="0 0 24 24">
                     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-miterlimit="10" stroke-width="1.5" d="m10 16l-4-4m0 0l4-4m-4 4h12" />
