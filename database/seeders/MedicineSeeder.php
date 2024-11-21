@@ -37,7 +37,7 @@ class MedicineSeeder extends Seeder
                 'type' => 'sirup',
                 'description' => 'OBH Sirup 100ml adalah obat batuk yang terbuat dari bahan-bahan herbal yang telah terbukti secara klinis meredakan batuk berdahak maupun tidak berdahak. Dengan rasa yang nyaman di tenggorokan, sirup ini cocok untuk semua kalangan usia. Konsumsi secara rutin untuk hasil maksimal dalam meredakan gejala batuk.',
                 'price' => 15000,
-                'stock' => 30,
+                'stock' => 3,
                 'image' => 'obh.jpg',
                 'created_at' => now(),
             ],
